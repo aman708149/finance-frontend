@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React, { Suspense, useEffect, useState } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
 import axios from "axios";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
@@ -8,7 +8,7 @@ import { validateResetToken } from "./service";
 
 const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
 
-export default function ResetPasswordPage() {
+function ResetPasswordContent() {
     const searchParams = useSearchParams();
     const router = useRouter();
 
@@ -24,7 +24,6 @@ export default function ResetPasswordPage() {
     const [message, setMessage] = useState("");
     const [error, setError] = useState("");
 
-    // validate token on page load
     useEffect(() => {
         if (!token) {
             setError("Invalid reset link");
@@ -32,7 +31,7 @@ export default function ResetPasswordPage() {
         }
 
         validateToken();
-    }, []);
+    }, [token]);
 
     const validateToken = async () => {
         try {
@@ -116,16 +115,13 @@ export default function ResetPasswordPage() {
                 {!error && (
                     <div className="space-y-4">
 
-                        {/* New Password */}
                         <div className="relative">
                             <input
                                 type={showPassword ? "text" : "password"}
                                 placeholder="New Password"
                                 className="w-full border rounded-lg p-3 pr-12 focus:outline-none focus:ring-2 focus:ring-blue-500 text-black"
                                 value={password}
-                                onChange={(e) =>
-                                    setPassword(e.target.value)
-                                }
+                                onChange={(e) => setPassword(e.target.value)}
                             />
 
                             <button
@@ -143,7 +139,6 @@ export default function ResetPasswordPage() {
                             </button>
                         </div>
 
-                        {/* Confirm Password */}
                         <div className="relative">
                             <input
                                 type={
@@ -189,5 +184,13 @@ export default function ResetPasswordPage() {
                 )}
             </div>
         </div>
+    );
+}
+
+export default function ResetPasswordPage() {
+    return (
+        <Suspense fallback={<div>Loading...</div>}>
+            <ResetPasswordContent />
+        </Suspense>
     );
 }
