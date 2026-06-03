@@ -2,10 +2,11 @@ import { configureStore } from "@reduxjs/toolkit";
 import userReducer, { UserState } from '../component/slices/userDetail';
 
 
-import authReducer from "./authSlice";
+import authReducer, { AuthState } from "./authSlice";
 import themeConfigSlice from "./slices/themeConfigSlice";
 
 export interface AppState {
+    auth: AuthState;
     user: UserState;
     themeConfig: ReturnType<typeof themeConfigSlice>;
 

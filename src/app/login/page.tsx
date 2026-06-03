@@ -41,11 +41,13 @@ export default function Page() {
 
             const { accessToken, refreshToken } = res.data;
             const payload = JSON.parse(atob(accessToken.split(".")[1]));
+
             const role = payload.role;
             dispatch(
                 setUser({
-                    userId: payload.sub,
-                    role,
+                    userId: payload.userId,
+                    email: payload.email,
+                    role: payload.role,
                     accessToken,
                     refreshToken,
                 })

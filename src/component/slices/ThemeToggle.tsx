@@ -37,7 +37,9 @@ const applyTheme = (mode: ThemeMode) => {
 function ThemeToggle() {
     const dispatch = useDispatch<AppDispatch>();
     const { theme } = useSelector((state: RootState) => state.themeConfig);
-    const user = useSelector((state: RootState) => state.user);
+    const user = useSelector((state: RootState) => state.auth);
+
+    console.log("user is", user)
 
     // ✅ On mount: restore saved theme to both Redux + DOM
     React.useEffect(() => {
@@ -63,7 +65,7 @@ function ThemeToggle() {
 
     const updatePreference = async (mode: ThemeMode) => {
         try {
-            await updateUserPrefrencesService(user?.roles, mode);
+            await updateUserPrefrencesService(user?.role, mode);
             localStorage.setItem('theme', mode);
             dispatch(toggleTheme(mode));
             applyTheme(mode);
