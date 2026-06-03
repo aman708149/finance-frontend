@@ -1,6 +1,7 @@
 "use client";
 
 import { FiMenu } from "react-icons/fi";
+import ThemeToggle from "../slices/ThemeToggle";
 
 export default function Navbar({
   toggleSidebar,
@@ -31,12 +32,17 @@ export default function Navbar({
         </h1>
       </div>
 
-      <button
-        onClick={handleLogout}
-        className="bg-red-500 text-white px-4 py-2 rounded"
-      >
-        Logout
-      </button>
+      <div className=" flex flex-row gap-2 md:gap-12">
+        <ThemeToggle />
+        <button
+          onClick={handleLogout}
+          className="bg-red-500 text-white px-4 py-2 rounded hover:cursor-pointer"
+        >
+          Logout
+        </button>
+      </div>
+
+
     </header>
   );
 }
