@@ -39,8 +39,6 @@ function ThemeToggle() {
     const { theme } = useSelector((state: RootState) => state.themeConfig);
     const user = useSelector((state: RootState) => state.auth);
 
-    console.log("user is", user)
-
     // ✅ On mount: restore saved theme to both Redux + DOM
     React.useEffect(() => {
         const saved = localStorage.getItem('theme') as ThemeMode | null;
