@@ -61,6 +61,8 @@ function ThemeToggle() {
         return () => window.removeEventListener('storage', onStorage);
     }, []);
 
+    console.log("role is", user?.role)
+
     const updatePreference = async (mode: ThemeMode) => {
         try {
             await updateUserPrefrencesService(user?.role, mode);

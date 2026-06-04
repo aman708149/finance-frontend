@@ -38,7 +38,7 @@ export const getAllInvestments = async (
     }
 
     // Super Admin
-    else if (role === "super_admin") {
+    else if (role === "admin") {
 
         endpoint = "/admin/investments";
     }

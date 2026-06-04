@@ -13,7 +13,7 @@ export function middleware(request: NextRequest) {
     }
 
     // redirect logged-in users based on role
-    if (role === "super_admin") {
+    if (role === "admin") {
       return NextResponse.redirect(new URL("/admin", request.url));
     }
 
@@ -29,7 +29,7 @@ export function middleware(request: NextRequest) {
   // allow login route without token
   if (pathname === "/login") {
     if (token && role) {
-      if (role === "super_admin") {
+      if (role === "admin") {
         return NextResponse.redirect(new URL("/admin", request.url));
       }
 
@@ -51,7 +51,7 @@ export function middleware(request: NextRequest) {
   }
 
   // role-based protection
-  if (pathname.startsWith("/admin") && role !== "super_admin") {
+  if (pathname.startsWith("/admin") && role !== "admin") {
     return NextResponse.redirect(new URL("/login", request.url));
   }
 
