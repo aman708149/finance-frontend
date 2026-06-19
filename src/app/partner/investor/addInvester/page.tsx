@@ -151,47 +151,46 @@ export default function Page() {
     ];
 
     return (
-        <div className="min-h-screen bg-linear-to-br from-slate-100 to-slate-200 p-4 md:p-8">
+        <div className="min-h-screen bg-gray-100 dark:bg-gray-900 p-4 md:p-8 transition-colors duration-200">
 
             {/* TOP HEADER */}
-            <div className="bg-white rounded-3xl border border-slate-200 shadow-sm p-6 md:p-8 mb-8">
+            <div className="bg-white dark:bg-gray-800 rounded-3xl border border-gray-200 dark:border-gray-700 shadow-sm hover:shadow-md transition-shadow duration-300 p-6 md:p-8 mb-8">
 
                 <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-6">
 
                     <div>
-                        <h1 className="text-3xl md:text-4xl font-bold text-slate-800">
+                        <h1 className="text-3xl md:text-4xl font-bold text-gray-800 dark:text-gray-100">
                             Add New Investor
                         </h1>
 
-                        <p className="text-slate-500 mt-2 text-sm md:text-base">
+                        <p className="text-gray-500 dark:text-gray-400 mt-2 text-sm md:text-base">
                             Secure onboarding process
                             for new investors with OTP verification.
                         </p>
                     </div>
 
                     {/* STATUS BADGE */}
-                    <div className="bg-blue-50 border border-blue-100 px-5 py-3 rounded-2xl">
+                    <div className="bg-blue-50 dark:bg-blue-900/30 border border-blue-100 dark:border-blue-800 px-5 py-3 rounded-2xl backdrop-blur-sm">
 
-                        <p className="text-sm text-slate-500">
+                        <p className="text-sm text-gray-500 dark:text-gray-400">
                             Current Step
                         </p>
 
-                        <h3 className="text-lg font-semibold text-blue-600">
+                        <h3 className="text-lg font-semibold text-blue-600 dark:text-blue-400">
                             {steps[step - 1]?.title}
                         </h3>
 
                     </div>
-
                 </div>
             </div>
 
             {/* STEP PROGRESS */}
-            <div className="bg-white rounded-3xl border border-slate-200 shadow-sm p-6 md:p-8 mb-8 overflow-hidden">
+            <div className="bg-white dark:bg-gray-800 rounded-3xl border border-gray-200 dark:border-gray-700 shadow-sm hover:shadow-md transition-shadow duration-300 p-6 md:p-8 mb-8 overflow-hidden">
 
                 <div className="relative flex items-center justify-between">
 
                     {/* DOTTED LINE */}
-                    <div className="absolute top-6 left-0 w-full border-t-2 border-dashed border-slate-300 z-0"></div>
+                    <div className="absolute top-6 left-0 w-full border-t-2 border-dashed border-gray-300 dark:border-gray-600 z-0"></div>
 
                     {steps.map((item) => {
 
@@ -208,29 +207,27 @@ export default function Page() {
 
                                 <div
                                     className={`
-                                    w-14 h-14 rounded-full border-4
-                                    flex items-center justify-center
-                                    transition-all duration-300
-                                    bg-white
-                                    ${
-                                        active
-                                            ? "border-blue-600 text-blue-600 shadow-lg shadow-blue-100"
-                                            : "border-slate-300 text-slate-400"
-                                    }
-                                `}
+                            w-14 h-14 rounded-full border-4
+                            flex items-center justify-center
+                            transition-all duration-300
+                            bg-white dark:bg-gray-800
+                            ${active
+                                            ? "border-blue-600 dark:border-blue-400 text-blue-600 dark:text-blue-400 shadow-lg shadow-blue-100 dark:shadow-blue-900/30"
+                                            : "border-gray-300 dark:border-gray-600 text-gray-400 dark:text-gray-500"
+                                        }
+                        `}
                                 >
                                     <Icon size={22} />
                                 </div>
 
                                 <p
                                     className={`
-                                    mt-3 text-xs md:text-sm font-medium text-center
-                                    ${
-                                        active
-                                            ? "text-blue-600"
-                                            : "text-slate-400"
-                                    }
-                                `}
+                            mt-3 text-xs md:text-sm font-medium text-center
+                            ${active
+                                            ? "text-blue-600 dark:text-blue-400"
+                                            : "text-gray-400 dark:text-gray-500"
+                                        }
+                        `}
                                 >
                                     {item.title}
                                 </p>
@@ -244,18 +241,18 @@ export default function Page() {
             {/* MAIN CARD */}
             <div className="max-w-3xl mx-auto">
 
-                <div className="bg-white rounded-3xl border border-slate-200 shadow-sm p-6 md:p-10">
+                <div className="bg-white dark:bg-gray-800 rounded-3xl border border-gray-200 dark:border-gray-700 shadow-sm hover:shadow-md transition-shadow duration-300 p-6 md:p-10">
 
                     {/* ERROR */}
                     {error && (
-                        <div className="mb-6 bg-red-50 border border-red-200 text-red-600 px-4 py-3 rounded-2xl">
+                        <div className="mb-6 bg-red-50 dark:bg-red-900/30 border border-red-200 dark:border-red-800 text-red-600 dark:text-red-400 px-4 py-3 rounded-2xl backdrop-blur-sm">
                             {error}
                         </div>
                     )}
 
                     {/* SUCCESS */}
                     {message && (
-                        <div className="mb-6 bg-green-50 border border-green-200 text-green-700 px-4 py-3 rounded-2xl">
+                        <div className="mb-6 bg-green-50 dark:bg-green-900/30 border border-green-200 dark:border-green-800 text-green-700 dark:text-green-400 px-4 py-3 rounded-2xl backdrop-blur-sm">
                             {message}
                         </div>
                     )}
@@ -265,7 +262,7 @@ export default function Page() {
                         <div className="space-y-6">
 
                             <div>
-                                <label className="block text-sm font-semibold text-slate-700 mb-2">
+                                <label className="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">
                                     Investor Email
                                 </label>
 
@@ -280,20 +277,23 @@ export default function Page() {
                                     }
                                     placeholder="Enter investor email"
                                     className="
-                                    w-full
-                                    rounded-2xl
-                                    border
-                                    border-slate-300
-                                    bg-slate-50
-                                    px-5
-                                    py-4
-                                    text-black
-                                    outline-none
-                                    transition
-                                    focus:border-blue-500
-                                    focus:ring-4
-                                    focus:ring-blue-100
-                                "
+                            w-full
+                            rounded-2xl
+                            border
+                            border-gray-300 dark:border-gray-600
+                            bg-gray-50 dark:bg-gray-700/50
+                            hover:bg-white dark:hover:bg-gray-700
+                            focus:bg-white dark:focus:bg-gray-700
+                            px-5
+                            py-4
+                            text-gray-900 dark:text-gray-100
+                            placeholder:text-gray-400 dark:placeholder:text-gray-500
+                            outline-none
+                            transition-all duration-200
+                            focus:border-blue-500 dark:focus:border-blue-400
+                            focus:ring-4
+                            focus:ring-blue-100 dark:focus:ring-blue-900/30
+                        "
                                 />
                             </div>
 
@@ -301,17 +301,19 @@ export default function Page() {
                                 onClick={handleSendOtp}
                                 disabled={loading}
                                 className="
-                                bg-blue-600
-                                hover:bg-blue-700
-                                text-white
-                                px-8
-                                py-4
-                                rounded-2xl
-                                font-semibold
-                                transition
-                                shadow-lg
-                                shadow-blue-200
-                            "
+                        bg-blue-600 dark:bg-blue-500
+                        hover:bg-blue-700 dark:hover:bg-blue-600
+                        active:scale-95
+                        text-white
+                        px-8
+                        py-4
+                        rounded-2xl
+                        font-semibold
+                        transition-all duration-200
+                        shadow-lg shadow-blue-200 dark:shadow-blue-900/30
+                        hover:shadow-xl hover:shadow-blue-300 dark:hover:shadow-blue-900/50
+                        disabled:opacity-50 disabled:cursor-not-allowed
+                    "
                             >
                                 {loading
                                     ? "Sending OTP..."
@@ -326,7 +328,7 @@ export default function Page() {
                         <div className="space-y-6">
 
                             <div>
-                                <label className="block text-sm font-semibold text-slate-700 mb-2">
+                                <label className="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">
                                     Enter OTP
                                 </label>
 
@@ -341,20 +343,23 @@ export default function Page() {
                                     }
                                     placeholder="Enter 6 digit OTP"
                                     className="
-                                    w-full
-                                    rounded-2xl
-                                    border
-                                    border-slate-300
-                                    bg-slate-50
-                                    px-5
-                                    py-4
-                                    text-black
-                                    outline-none
-                                    transition
-                                    focus:border-blue-500
-                                    focus:ring-4
-                                    focus:ring-blue-100
-                                "
+                            w-full
+                            rounded-2xl
+                            border
+                            border-gray-300 dark:border-gray-600
+                            bg-gray-50 dark:bg-gray-700/50
+                            hover:bg-white dark:hover:bg-gray-700
+                            focus:bg-white dark:focus:bg-gray-700
+                            px-5
+                            py-4
+                            text-gray-900 dark:text-gray-100
+                            placeholder:text-gray-400 dark:placeholder:text-gray-500
+                            outline-none
+                            transition-all duration-200
+                            focus:border-blue-500 dark:focus:border-blue-400
+                            focus:ring-4
+                            focus:ring-blue-100 dark:focus:ring-blue-900/30
+                        "
                                 />
                             </div>
 
@@ -362,17 +367,19 @@ export default function Page() {
                                 onClick={handleVerifyOtp}
                                 disabled={loading}
                                 className="
-                                bg-blue-600
-                                hover:bg-blue-700
-                                text-white
-                                px-8
-                                py-4
-                                rounded-2xl
-                                font-semibold
-                                transition
-                                shadow-lg
-                                shadow-blue-200
-                            "
+                        bg-blue-600 dark:bg-blue-500
+                        hover:bg-blue-700 dark:hover:bg-blue-600
+                        active:scale-95
+                        text-white
+                        px-8
+                        py-4
+                        rounded-2xl
+                        font-semibold
+                        transition-all duration-200
+                        shadow-lg shadow-blue-200 dark:shadow-blue-900/30
+                        hover:shadow-xl hover:shadow-blue-300 dark:hover:shadow-blue-900/50
+                        disabled:opacity-50 disabled:cursor-not-allowed
+                    "
                             >
                                 {loading
                                     ? "Verifying..."
@@ -387,7 +394,7 @@ export default function Page() {
                         <div className="space-y-6">
 
                             <div>
-                                <label className="block text-sm font-semibold text-slate-700 mb-2">
+                                <label className="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">
                                     Full Name
                                 </label>
 
@@ -402,25 +409,28 @@ export default function Page() {
                                     }
                                     placeholder="Enter full name"
                                     className="
-                                    w-full
-                                    rounded-2xl
-                                    border
-                                    border-slate-300
-                                    bg-slate-50
-                                    px-5
-                                    py-4
-                                    text-black
-                                    outline-none
-                                    transition
-                                    focus:border-blue-500
-                                    focus:ring-4
-                                    focus:ring-blue-100
-                                "
+                            w-full
+                            rounded-2xl
+                            border
+                            border-gray-300 dark:border-gray-600
+                            bg-gray-50 dark:bg-gray-700/50
+                            hover:bg-white dark:hover:bg-gray-700
+                            focus:bg-white dark:focus:bg-gray-700
+                            px-5
+                            py-4
+                            text-gray-900 dark:text-gray-100
+                            placeholder:text-gray-400 dark:placeholder:text-gray-500
+                            outline-none
+                            transition-all duration-200
+                            focus:border-blue-500 dark:focus:border-blue-400
+                            focus:ring-4
+                            focus:ring-blue-100 dark:focus:ring-blue-900/30
+                        "
                                 />
                             </div>
 
                             <div>
-                                <label className="block text-sm font-semibold text-slate-700 mb-2">
+                                <label className="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">
                                     Password
                                 </label>
 
@@ -435,20 +445,23 @@ export default function Page() {
                                     }
                                     placeholder="Enter password"
                                     className="
-                                    w-full
-                                    rounded-2xl
-                                    border
-                                    border-slate-300
-                                    bg-slate-50
-                                    px-5
-                                    py-4
-                                    text-black
-                                    outline-none
-                                    transition
-                                    focus:border-blue-500
-                                    focus:ring-4
-                                    focus:ring-blue-100
-                                "
+                            w-full
+                            rounded-2xl
+                            border
+                            border-gray-300 dark:border-gray-600
+                            bg-gray-50 dark:bg-gray-700/50
+                            hover:bg-white dark:hover:bg-gray-700
+                            focus:bg-white dark:focus:bg-gray-700
+                            px-5
+                            py-4
+                            text-gray-900 dark:text-gray-100
+                            placeholder:text-gray-400 dark:placeholder:text-gray-500
+                            outline-none
+                            transition-all duration-200
+                            focus:border-blue-500 dark:focus:border-blue-400
+                            focus:ring-4
+                            focus:ring-blue-100 dark:focus:ring-blue-900/30
+                        "
                                 />
                             </div>
 
@@ -456,17 +469,19 @@ export default function Page() {
                                 onClick={handleComplete}
                                 disabled={loading}
                                 className="
-                                bg-green-600
-                                hover:bg-green-700
-                                text-white
-                                px-8
-                                py-4
-                                rounded-2xl
-                                font-semibold
-                                transition
-                                shadow-lg
-                                shadow-green-200
-                            "
+                        bg-green-600 dark:bg-green-500
+                        hover:bg-green-700 dark:hover:bg-green-600
+                        active:scale-95
+                        text-white
+                        px-8
+                        py-4
+                        rounded-2xl
+                        font-semibold
+                        transition-all duration-200
+                        shadow-lg shadow-green-200 dark:shadow-green-900/30
+                        hover:shadow-xl hover:shadow-green-300 dark:hover:shadow-green-900/50
+                        disabled:opacity-50 disabled:cursor-not-allowed
+                    "
                             >
                                 {loading
                                     ? "Creating..."
@@ -480,20 +495,20 @@ export default function Page() {
                     {step === 4 && (
                         <div className="text-center py-10">
 
-                            <div className="w-24 h-24 rounded-full bg-green-100 flex items-center justify-center mx-auto">
+                            <div className="w-24 h-24 rounded-full bg-green-100 dark:bg-green-900/30 flex items-center justify-center mx-auto backdrop-blur-sm">
 
                                 <CheckCircle2
                                     size={50}
-                                    className="text-green-600"
+                                    className="text-green-600 dark:text-green-400"
                                 />
 
                             </div>
 
-                            <h2 className="text-3xl font-bold text-slate-800 mt-6">
+                            <h2 className="text-3xl font-bold text-gray-800 dark:text-gray-100 mt-6">
                                 Investor Created
                             </h2>
 
-                            <p className="text-slate-500 mt-3">
+                            <p className="text-gray-500 dark:text-gray-400 mt-3">
                                 Investor account has
                                 been successfully created
                                 and verified.
