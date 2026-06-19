@@ -1,8 +1,8 @@
 
 'use client'
 import React, { useState } from 'react';
-import { 
-  Users, TrendingUp, Wallet, BarChart3, 
+import {
+  Users, TrendingUp, Wallet, BarChart3,
   Search, Filter, Plus, Eye,
   PieChart, ArrowUpRight, Briefcase,
   Landmark, Coins, Sparkles,
@@ -38,7 +38,7 @@ export default function PartnerDashboard() {
     { title: 'Active Portfolios', value: '42', change: '+8%', icon: PieChart },
   ];
 
-  const filteredInvestors = investors.filter(investor => 
+  const filteredInvestors = investors.filter(investor =>
     investor.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
     investor.email.toLowerCase().includes(searchTerm.toLowerCase())
   );
@@ -48,42 +48,6 @@ export default function PartnerDashboard() {
 
       {/* Main Content */}
       <div>
-        {/* Header */}
-        <header className="sticky top-0 z-10 bg-header_sidebar/80 dark:bg-header_sidebar-dark/80 backdrop-blur-xl border-b border-white/10 dark:border-white/5 transition-colors duration-200">
-          <div className="flex items-center justify-between px-8 py-4">
-            <div className="flex items-center gap-4 flex-1 max-w-xl">
-              <div className="relative flex-1">
-                <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-dark dark:text-white-dark" />
-                <input
-                  type="text"
-                  placeholder="Search investors, portfolios..."
-                  value={searchTerm}
-                  onChange={(e) => setSearchTerm(e.target.value)}
-                  className="w-full pl-10 pr-4 py-2 bg-white dark:bg-black border border-white/20 dark:border-white/10 rounded-xl text-dark dark:text-white-dark placeholder:text-dark/50 dark:placeholder:text-white-dark/50 focus:outline-none focus:ring-2 focus:ring-primary transition-all"
-                />
-              </div>
-              <button className="p-2 rounded-lg text-dark dark:text-white-dark hover:bg-primary/10 transition-colors">
-                <Filter className="w-4 h-4" />
-              </button>
-            </div>
-            <div className="flex items-center gap-4">
-              <button className="relative p-2 rounded-lg text-dark dark:text-white-dark hover:bg-primary/10 transition-colors">
-                <Bell className="w-5 h-5" />
-                <span className="absolute top-1 right-1 w-2 h-2 bg-primary rounded-full"></span>
-              </button>
-              <div className="flex items-center gap-3 pl-4 border-l border-white/10 dark:border-white/5">
-                <div className="text-right">
-                  <p className="text-sm font-medium text-dark dark:text-dark-light">Partner Name</p>
-                  <p className="text-xs text-white-dark">Premium Partner</p>
-                </div>
-                <div className="w-10 h-10 bg-primary rounded-full flex items-center justify-center">
-                  <span className="text-white font-semibold">PN</span>
-                </div>
-              </div>
-            </div>
-          </div>
-        </header>
-
         {/* Dashboard Content */}
         <main className="p-8">
           {/* Welcome Banner */}
@@ -219,12 +183,11 @@ export default function PartnerDashboard() {
                         </div>
                       </td>
                       <td className="px-6 py-4">
-                        <span className={`px-2 py-1 rounded-lg text-xs font-medium ${
-                          investor.risk === 'High' ? 'bg-danger/10 text-danger' :
-                          investor.risk === 'Moderate' ? 'bg-warning/10 text-warning' :
-                          investor.risk === 'Aggressive' ? 'bg-info/10 text-info' :
-                          'bg-success/10 text-success'
-                        }`}>
+                        <span className={`px-2 py-1 rounded-lg text-xs font-medium ${investor.risk === 'High' ? 'bg-danger/10 text-danger' :
+                            investor.risk === 'Moderate' ? 'bg-warning/10 text-warning' :
+                              investor.risk === 'Aggressive' ? 'bg-info/10 text-info' :
+                                'bg-success/10 text-success'
+                          }`}>
                           {investor.risk}
                         </span>
                       </td>
