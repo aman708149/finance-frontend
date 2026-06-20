@@ -174,7 +174,7 @@ export default function PartnerDashboard() {
                         </div>
                       </td>
                       <td className="px-6 py-4">
-                        <span className="text-dark dark:text-dark-light font-medium">₹{investor.totalInvested.toLocaleString()}</span>
+                        <span className="text-dark dark:text-dark-light font-medium">₹{investor?.totalInvested.toLocaleString()}</span>
                       </td>
                       <td className="px-6 py-4">
                         <div className="flex items-center gap-1 text-success">

@@ -4,6 +4,7 @@ import type { NextRequest } from "next/server";
 export function middleware(request: NextRequest) {
   const token = request.cookies.get("accessToken")?.value;
   const role = request.cookies.get("role")?.value;
+  const isVerified = request.cookies.get("isVerified")?.value;
   const { pathname } = request.nextUrl;
 
   // Handle root route
@@ -17,8 +18,14 @@ export function middleware(request: NextRequest) {
       return NextResponse.redirect(new URL("/admin", request.url));
     }
 
-    if (role === "partner") {
-      return NextResponse.redirect(new URL("/partner", request.url));
+    if (
+      role === "partner" &&
+      isVerified !== "true" &&
+      !pathname.startsWith("/partner/onboarding")
+    ) {
+      return NextResponse.redirect(
+        new URL("/partner/onboarding", request.url)
+      );
     }
 
     if (role === "invester") {
