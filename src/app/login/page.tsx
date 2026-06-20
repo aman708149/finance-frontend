@@ -49,9 +49,10 @@ export default function LoginPage() {
             setError("");
 
             const res = await loginUser({ email, password });
-            const { accessToken, refreshToken } = res.data;
+            const { accessToken, refreshToken} = res.data;
             const payload = JSON.parse(atob(accessToken.split(".")[1]));
             const role = payload.role;
+            const isVerified = payload.isVerified
 
             dispatch(setUser({
                 userId: payload.userId,
@@ -69,6 +70,7 @@ export default function LoginPage() {
             // Store in cookies for middleware
             document.cookie = `accessToken=${accessToken}; path=/; max-age=86400`; // 24 hours
             document.cookie = `role=${role}; path=/; max-age=86400`;
+            document.cookie = `isVerified=${isVerified}; path=/; max-age=86400`;
 
             // Remember me functionality
             if (rememberMe) {
@@ -78,13 +80,28 @@ export default function LoginPage() {
             }
 
             // Redirect based on role
-            const redirectMap = {
-                [Role.ADMIN]: "/admin",
-                [Role.PARTNER]: "/partner",
-                [Role.INVESTER]: "/investor",
-            };
-            
-            router.push(redirectMap[role as Role] || "/");
+            if (role === Role.ADMIN) {
+                router.push("/admin");
+                return;
+            }
+
+            if (role === Role.PARTNER) {
+                if (isVerified) {
+                    router.push("/partner");
+                } else {
+                    router.push("/partner/onboarding");
+                }
+                return;
+            }
+
+            if (role === Role.INVESTER) {
+                router.push("/investor");
+                return;
+            }
+
+            router.push("/");
+
+            // router.push(redirectMap[role as Role] || "/");
         } catch (err: any) {
             setError(err?.response?.data?.message || "Login failed. Please check your credentials.");
         } finally {
@@ -284,10 +301,10 @@ export default function LoginPage() {
                         />
 
                         {forgotMessage && (
-                            <div className={`mt-3 p-3 rounded-lg text-sm flex items-center gap-2 ${forgotMessage.includes("success") || forgotMessage.includes("sent") 
-                                ? "bg-green-50 dark:bg-green-500/10 text-green-700 dark:text-green-400 border border-green-200 dark:border-green-500/20" 
+                            <div className={`mt-3 p-3 rounded-lg text-sm flex items-center gap-2 ${forgotMessage.includes("success") || forgotMessage.includes("sent")
+                                ? "bg-green-50 dark:bg-green-500/10 text-green-700 dark:text-green-400 border border-green-200 dark:border-green-500/20"
                                 : "bg-red-50 dark:bg-red-500/10 text-red-700 dark:text-red-400 border border-red-200 dark:border-red-500/20"
-                            }`}>
+                                }`}>
                                 <FaCheckCircle className="w-4 h-4 shrink-0" />
                                 {forgotMessage}
                             </div>
