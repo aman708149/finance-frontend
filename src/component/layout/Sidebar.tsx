@@ -44,6 +44,13 @@ const getMenuByRole = (role: string): MenuItem[] => {
       return [
         { name: "Dashboard", path: "/admin", icon: LayoutDashboard },
         {
+          name: "Partner",
+          icon: Users,
+          children: [
+            { name: "Total Partner", path: "/admin/partner/partnerlist", icon: Users },
+          ],
+        },
+        {
           name: "Investor",
           icon: Users,
           children: [

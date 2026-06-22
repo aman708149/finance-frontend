@@ -12,7 +12,7 @@ import { RootState } from "@/store";
 export default function Navbar({ toggleSidebar }: { toggleSidebar: () => void }) {
   const dispatch = useDispatch();
   const { email, role, userId } = useSelector((state: RootState) => state.auth);
-  
+
   const [isProfileOpen, setIsProfileOpen] = useState(false);
   const [notifications, setNotifications] = useState([
     { id: 1, message: "New investor added", time: "2 min ago", read: false },
@@ -33,7 +33,7 @@ export default function Navbar({ toggleSidebar }: { toggleSidebar: () => void })
         setShowNotifications(false);
       }
     };
-    
+
     document.addEventListener("mousedown", handleClickOutside);
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
@@ -41,12 +41,12 @@ export default function Navbar({ toggleSidebar }: { toggleSidebar: () => void })
   const handleLogout = () => {
     dispatch(logout());
     sessionStorage.clear();
-    
+
     // Clear cookies
     document.cookie = "accessToken=; path=/; max-age=0";
     document.cookie = "role=; path=/; max-age=0";
     document.cookie = "refreshToken=; path=/; max-age=0";
-    
+
     window.location.href = "/login";
   };
 
@@ -71,6 +71,27 @@ export default function Navbar({ toggleSidebar }: { toggleSidebar: () => void })
   };
 
   const unreadCount = notifications.filter(n => !n.read).length;
+
+  const profilePath =
+    role === "admin"
+      ? "/admin/profile"
+      : role === "partner"
+        ? "/partner/profile"
+        : "/investor/profile";
+
+  const settingsPath =
+    role === "admin"
+      ? "/admin/settings"
+      : role === "partner"
+        ? "/partner/settings"
+        : "/investor/settings";
+
+  const helpPath =
+    role === "admin"
+      ? "/admin/help"
+      : role === "partner"
+        ? "/partner/help"
+        : "/investor/help";
 
   return (
     <header className="sticky top-0 z-30 h-16 bg-white dark:bg-gray-900 border-b border-gray-200 dark:border-gray-800 shadow-sm flex items-center justify-between px-4 md:px-6 transition-colors duration-200">
@@ -148,9 +169,8 @@ export default function Navbar({ toggleSidebar }: { toggleSidebar: () => void })
                   notifications.map((notif) => (
                     <div
                       key={notif.id}
-                      className={`p-3 border-b border-gray-100 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-700/50 transition-colors cursor-pointer ${
-                        !notif.read ? "bg-blue-50 dark:bg-blue-500/5" : ""
-                      }`}
+                      className={`p-3 border-b border-gray-100 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-700/50 transition-colors cursor-pointer ${!notif.read ? "bg-blue-50 dark:bg-blue-500/5" : ""
+                        }`}
                     >
                       <p className="text-sm text-gray-800 dark:text-gray-200">{notif.message}</p>
                       <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">{notif.time}</p>
@@ -209,10 +229,10 @@ export default function Navbar({ toggleSidebar }: { toggleSidebar: () => void })
                   </div>
                 </div>
               </div>
-              
+
               <div className="py-2">
                 <Link
-                  href="/profile"
+                  href={profilePath}
                   className="flex items-center gap-3 px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors"
                   onClick={() => setIsProfileOpen(false)}
                 >
@@ -220,21 +240,25 @@ export default function Navbar({ toggleSidebar }: { toggleSidebar: () => void })
                   <span>Profile Settings</span>
                 </Link>
                 <Link
-                  href="/settings"
+                  href={settingsPath}
                   className="flex items-center gap-3 px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors"
                   onClick={() => setIsProfileOpen(false)}
                 >
                   <FiSettings className="text-gray-400" />
                   <span>Account Settings</span>
                 </Link>
-                <Link
-                  href="/help"
-                  className="flex items-center gap-3 px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors"
-                  onClick={() => setIsProfileOpen(false)}
-                >
-                  <FiHelpCircle className="text-gray-400" />
-                  <span>Help Center</span>
-                </Link>
+
+                {role !== "admin" && (
+                  <Link
+                    href={helpPath}
+                    className="flex items-center gap-3 px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors"
+                    onClick={() => setIsProfileOpen(false)}
+                  >
+                    <FiHelpCircle className="text-gray-400" />
+                    <span>Help Center</span>
+                  </Link>
+                )}
+
                 <div className="border-t border-gray-200 dark:border-gray-700 my-1"></div>
                 <button
                   onClick={handleLogout}
