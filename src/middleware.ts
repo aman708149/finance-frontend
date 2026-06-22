@@ -5,69 +5,117 @@ export function middleware(request: NextRequest) {
   const token = request.cookies.get("accessToken")?.value;
   const role = request.cookies.get("role")?.value;
   const isVerified = request.cookies.get("isVerified")?.value;
+
   const { pathname } = request.nextUrl;
 
-  // Handle root route
+  // No token => login
+  if (!token) {
+    if (pathname !== "/login") {
+      return NextResponse.redirect(
+        new URL("/login", request.url)
+      );
+    }
+
+    return NextResponse.next();
+  }
+
+  // Root route redirect
   if (pathname === "/") {
-    if (!token) {
-      return NextResponse.redirect(new URL("/login", request.url));
-    }
-
-    // redirect logged-in users based on role
     if (role === "admin") {
-      return NextResponse.redirect(new URL("/admin", request.url));
+      return NextResponse.redirect(
+        new URL("/admin", request.url)
+      );
     }
 
+    if (role === "partner") {
+      return NextResponse.redirect(
+        new URL(
+          isVerified === "true"
+            ? "/partner"
+            : "/partner/onboarding",
+          request.url
+        )
+      );
+    }
+
+    if (role === "invester") {
+      return NextResponse.redirect(
+        new URL("/investor", request.url)
+      );
+    }
+  }
+
+  // Logged-in user visiting login page
+  if (pathname === "/login") {
+    if (role === "admin") {
+      return NextResponse.redirect(
+        new URL("/admin", request.url)
+      );
+    }
+
+    if (role === "partner") {
+      return NextResponse.redirect(
+        new URL(
+          isVerified === "true"
+            ? "/partner"
+            : "/partner/onboarding",
+          request.url
+        )
+      );
+    }
+
+    if (role === "invester") {
+      return NextResponse.redirect(
+        new URL("/investor", request.url)
+      );
+    }
+  }
+
+  // PARTNER ONBOARDING PROTECTION
+  if (
+    role === "partner" &&
+    isVerified !== "true"
+  ) {
+    // Allow onboarding page only
     if (
-      role === "partner" &&
-      isVerified !== "true" &&
-      !pathname.startsWith("/partner/onboarding")
+      !pathname.startsWith(
+        "/partner/onboarding"
+      )
     ) {
       return NextResponse.redirect(
         new URL("/partner/onboarding", request.url)
       );
     }
 
-    if (role === "invester") {
-      return NextResponse.redirect(new URL("/investor", request.url));
-    }
-  }
-
-  // allow login route without token
-  if (pathname === "/login") {
-    if (token && role) {
-      if (role === "admin") {
-        return NextResponse.redirect(new URL("/admin", request.url));
-      }
-
-      if (role === "partner") {
-        return NextResponse.redirect(new URL("/partner", request.url));
-      }
-
-      if (role === "invester") {
-        return NextResponse.redirect(new URL("/investor", request.url));
-      }
-    }
-
     return NextResponse.next();
   }
 
-  // block protected routes if token missing
-  if (!token) {
-    return NextResponse.redirect(new URL("/login", request.url));
+  // Role protection
+  if (
+    pathname.startsWith("/admin") &&
+    role !== "admin"
+  ) {
+    return NextResponse.redirect(
+      new URL("/login", request.url)
+    );
   }
 
-  // role-based protection
-  if (pathname.startsWith("/admin") && role !== "admin") {
-    return NextResponse.redirect(new URL("/login", request.url));
+  if (
+    pathname.startsWith("/partner") &&
+    role !== "partner"
+  ) {
+    return NextResponse.redirect(
+      new URL("/login", request.url)
+    );
   }
 
-  if (pathname.startsWith("/partner") && role !== "partner") {
-    return NextResponse.redirect(new URL("/login", request.url));
-  }
-
-  if (pathname.startsWith("/investor") && role !== "invester") {
-    return NextResponse.redirect(new URL("/login", request.url));
+  if (
+    pathname.startsWith("/investor") &&
+    role !== "invester"
+  ) {
+    return NextResponse.redirect(
+      new URL("/login", request.url)
+    );
   }
 
   return NextResponse.next();
@@ -76,9 +124,9 @@ export function middleware(request: NextRequest) {
 export const config = {
   matcher: [
     "/",
+    "/login",
     "/admin/:path*",
     "/partner/:path*",
     "/investor/:path*",
-    "/login",
   ],
 };
