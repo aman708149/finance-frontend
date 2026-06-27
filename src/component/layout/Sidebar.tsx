@@ -59,6 +59,7 @@ const getMenuByRole = (role: string): MenuItem[] => {
           ],
         },
         { name: "Reports", path: "/admin/reports", icon: FileText },
+        { name: "Add Notification", path: "/admin/add-notification", icon: FileText },
         { name: "Users", path: "/admin/users", icon: User },
       ];
 
